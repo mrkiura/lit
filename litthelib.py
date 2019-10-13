@@ -58,8 +58,6 @@ def repo_dir(repo, *path, mkdir=False):
         return None
 
 
-
-
 class GitRepository:
     """Represents a Git repository"""
 
@@ -114,4 +112,4 @@ def main(argv=sys.argv[1:]):
     if callable(cmd_command):
         return cmd_command(args)
     else:
-        logging.error(msg="Command {args} not found".format(args))
+        logging.error(msg=f"Command {args} not found")
