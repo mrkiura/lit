@@ -17,19 +17,46 @@ argsubparsers = argparser.add_subparsers(title="Commands", dest="command")
 argsubparsers.required = True
 
 
-def repo_file():
-    return
-
-
 def repo_path(repository, *path):
-    """"
-    Compute path under repo's gitdir
-    """
+    """Compute path under repo's gitdir"""
     return os.path.join(repository.gitdir, *path)
 
 
-def repo_fil(repo, *path):
-    pass
+def repo_file(repo, *path, mkdir=False):
+    """Compute path under repo's gitdir but creates directory if computed directory absent.
+    :param repo:
+    :param path:
+    :param mkdir:
+    :return:
+    :example:
+
+    >> repo_file(r, \"refs\", \"remotes\", \"origin\", \"HEAD\")
+    .git/refs/remotes/origin
+    """
+    if repo_dir(repo, *path, mkdir=mkdir):
+        return repo_path(repo, path)
+
+
+def repo_dir(repo, *path, mkdir=False):
+    """Compute gitdir path and create directory if not present
+    :param repo:
+    :param path:
+    :return:
+    """
+    path = repo_path(repo, *path)
+
+    if os.path.exists(path):
+        if os.path.isdir(path):
+            return path
+
+        else:
+            raise Exception(f"Not a directory ${path}")
+
+    if mkdir:
+        os.makedirs(path)
+    else:
+        return None
+
 
 
 
@@ -61,6 +88,7 @@ class GitRepository:
             if version != 0:
                 raise Exception(f"Unsupported repositoryformatversion {version}")
 
+
 def main(argv=sys.argv[1:]):
     args = argparser.parse_args(argv)
     command = args.command
@@ -81,7 +109,7 @@ def main(argv=sys.argv[1:]):
         "show-ref": cmd_show_ref,
         "tag": cmd_tag
     }
-    
+
     cmd_command = command_map.get(command)
     if callable(cmd_command):
         return cmd_command(args)
