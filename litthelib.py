@@ -101,6 +101,7 @@ def repo_default_config():
 
 argsp = argsubparsers.add_parser('init', help='Initialize a new, empty repository')
 
+
 class GitRepository:
     """Represents a Git repository"""
 
