@@ -2,11 +2,11 @@ import argparse
 import collections
 import configparser
 import hashlib
+import logging
 import os
 import re
 import sys
 import zlib
-import logging
 
 logger = logging.Logger(__name__)
 
@@ -98,6 +98,7 @@ def repo_default_config():
     config.set("core", "bare", "false")
 
     return config
+
 
 class GitRepository:
     """Represents a Git repository"""
