@@ -10,7 +10,7 @@ import zlib
 
 logger = logging.Logger(__name__)
 
-argparser = argparse.ArgumentParser(description='The humble version control')
+argparser = argparse.ArgumentParser(description='The lit version control')
 
 argsubparsers = argparser.add_subparsers(title='Commands', dest='command')
 
