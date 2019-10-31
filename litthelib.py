@@ -50,7 +50,7 @@ def repo_dir(repo, *path, mkdir=False):
             return path
 
         else:
-            raise Exception(f'Not a directory ${path}')
+            raise Exception(f'Not a directory {path}')
 
     if mkdir:
         os.makedirs(path)
@@ -65,9 +65,9 @@ def repo_create(path):
     # ensure that path is empty or doesn't exist
     if os.path.exists(repo.worktree):
         if not os.path.isdir(repo.worktree):
-            raise Exception(f'${path} is not a directory')
+            raise Exception(f'{path} is not a directory')
         if os.listdir(repo.worktree):
-            raise Exception(f'${path} is not empty')
+            raise Exception(f'{path} is not empty')
     else:
         os.makedirs(repo.worktree)
 
@@ -147,20 +147,20 @@ def main(argv=sys.argv[1:]):
     command = args.command
 
     command_map = {
-        'add': cmd_add,
-        'cat-file': cmd_cat_file,
-        'checkout': cmd_checkout,
-        'commit': cmd_commit,
-        'hash-object': cmd_hash_object,
+        # 'add': cmd_add,
+        # 'cat-file': cmd_cat_file,
+        # 'checkout': cmd_checkout,
+        # 'commit': cmd_commit,
+        # 'hash-object': cmd_hash_object,
         'init': cmd_init,
-        'log': cmd_log,
-        'ls-tree': cmd_ls_tree,
-        'merge': cmd_merge,
-        'rebase': cmd_rebase,
-        'rev-parse': cmd_rev_parse,
-        'rm': cmd_rm,
-        'show-ref': cmd_show_ref,
-        'tag': cmd_tag
+        # 'log': cmd_log,
+        # 'ls-tree': cmd_ls_tree,
+        # 'merge': cmd_merge,
+        # 'rebase': cmd_rebase,
+        # 'rev-parse': cmd_rev_parse,
+        # 'rm': cmd_rm,
+        # 'show-ref': cmd_show_ref,
+        # 'tag': cmd_tag
     }
 
     cmd_command = command_map.get(command)
