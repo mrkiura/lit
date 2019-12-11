@@ -16,7 +16,6 @@ argsubparsers = argparser.add_subparsers(title='Commands', dest='command')
 
 argsubparsers.required = True
 
-
 def repo_path(repository, *path):
     """Compute path under repo's gitdir"""
     return os.path.join(repository.gitdir, *path)
@@ -33,8 +32,8 @@ def repo_file(repo, *path, mkdir=False):
     >> repo_file(r, \'refs\', \'remotes\', \'origin\', \'HEAD\')
     .git/refs/remotes/origin
     """
-    if repo_dir(repo, *path, mkdir=mkdir):
-        return repo_path(repo, path)
+    if repo_dir(repo, *path[:-1], mkdir=mkdir):
+        return repo_path(repo, *path)
 
 
 def repo_dir(repo, *path, mkdir=False):
@@ -78,7 +77,7 @@ def repo_create(path):
 
     # .git/ description
     with open(repo_file(repo, 'description'), 'w') as f:
-        f.write('Unnamed repository; edit this file \'description\' to name the repository.\n')
+        f.write('Anonymous repository; edit this file \'description\' to name the repository.\n')
 
     with open(repo_file(repo, 'head'), 'w') as f:
         f.write('ref: refs/heads/master\n')
