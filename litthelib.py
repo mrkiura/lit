@@ -1,12 +1,8 @@
 import argparse
-import collections
 import configparser
-import hashlib
 import logging
 import os
-import re
 import sys
-import zlib
 
 logger = logging.Logger(__name__)
 
@@ -16,13 +12,15 @@ argsubparsers = argparser.add_subparsers(title='Commands', dest='command')
 
 argsubparsers.required = True
 
+
 def repo_path(repository, *path):
     """Compute path under repo's gitdir"""
     return os.path.join(repository.gitdir, *path)
 
 
 def repo_file(repo, *path, mkdir=False):
-    """Compute path under repo's gitdir but creates directory if computed directory absent.
+    """Compute path under repo's gitdir but
+    creates directory if computed directory absent.
     :param repo:
     :param path:
     :param mkdir:
@@ -77,7 +75,8 @@ def repo_create(path):
 
     # .git/ description
     with open(repo_file(repo, 'description'), 'w') as f:
-        f.write('Anonymous repository; edit this file \'description\' to name the repository.\n')
+        f.write('Anonymous repository; edit this \
+            file \'description\' to name the repository.\n')
 
     with open(repo_file(repo, 'head'), 'w') as f:
         f.write('ref: refs/heads/master\n')
@@ -99,7 +98,8 @@ def repo_default_config():
     return config
 
 
-argsp = argsubparsers.add_parser('init', help='Initialize a new, empty repository')
+argsp = argsubparsers.add_parser(
+    'init', help='Initialize a new, empty repository')
 argsp.add_argument('path',
                    metavar='directory',
                    nargs='?',
@@ -138,7 +138,7 @@ class GitRepository:
         if not force:
             version = int(self.config.get('core', 'repositoryformatversion'))
             if version != 0:
-                raise Exception(f'Unsupported repositoryformatversion {version}')
+                raise Exception(f'Unsupported repoformatversion {version}')
 
 
 def main(argv=sys.argv[1:]):
