@@ -50,12 +50,12 @@ def repo_dir(repo, *path, mkdir=False):
     if os.path.exists(path):
         if os.path.isdir(path):
             return path
-
         else:
             raise Exception(f'Not a directory {path}')
 
     if mkdir:
         os.makedirs(path)
+        return path
     else:
         return None
 
