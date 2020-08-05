@@ -38,6 +38,7 @@ def repo_dir(repo, *path, mkdir=False):
     """Compute gitdir path and create directory if not present
     :param repo:
     :param path:
+    :param mkdir
     :return:
     """
     path = repo_path(repo, *path)
