@@ -14,13 +14,17 @@ argsubparsers.required = True
 
 
 def repo_path(repository, *path):
-    """Compute path under repo's gitdir"""
+    """Create new directory path with gitdir as the parent directory.
+    :example:
+    >> repo_path(repository, 'dir1' 'dir2')
+    .git/dir1/dir2
+    """
     return os.path.join(repository.gitdir, *path)
 
 
 def repo_file(repo, *path, mkdir=False):
-    """Compute path under repo's gitdir but
-    creates directory if computed directory absent.
+    """Similar to repo_path but
+    creates directory if computed directory is absent.
     :param repo:
     :param path:
     :param mkdir:
@@ -142,7 +146,9 @@ class GitRepository:
                 raise Exception(f'Unsupported repoformatversion {version}')
 
 
-def main(argv=sys.argv[1:]):
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv[1:]
     args = argparser.parse_args(argv)
     command = args.command
 
