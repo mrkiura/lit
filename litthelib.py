@@ -22,6 +22,28 @@ def repo_path(repository, *path):
     return os.path.join(repository.gitdir, *path)
 
 
+def repo_find(path=".", required=True):
+    """Check (working backwards from current to /) for a .git directory."""
+    path = os.path.realpath(path)
+
+    if os.path.isdir(os.path.join(path, ".git")):
+        return GitRepository(path)
+
+    # if we haven't returned, recurse in parent, if w
+    parent = os.path.realpath(os.path.join(path, ".."))
+
+    if parent == path:
+        # Bottom case
+        # os.path.join("/", "..") == "/":
+        # If parent==path, then path is root.
+        if required:
+            raise Exception("No git directory")
+        else:
+            return None
+    # let's recurse
+    return repo_find(parent, required)
+
+
 def repo_file(repo, *path, mkdir=False):
     """Similar to repo_path but
     creates directory if computed directory is absent.
